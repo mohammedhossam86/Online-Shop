@@ -1,0 +1,28 @@
+<%- include('parts/header') %>
+    <%- include('parts/navbar') %>
+    <% if(!product){ %>
+        <div class = "alert alert-danger"> 
+            There is no products matches this id 
+        </div>
+    <% } else { %>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <img src="/<%= product.image %>" class="card-img-top" alt="product.image">
+                    <form action="/cart" method="Post">
+                        <input type="number" name="amount" class = "form-control">
+                        <input type="submit" value="Add to cart" class = "btn btn-primary">
+                    </form>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h3><%= product.name %></h3>
+                    <h5>Price: <%= product.price %> $</h5>
+                    <p> <%=  product.description%> </p>
+
+                </div>            
+            </div>
+        </div>
+    <% } %>
+        
+
+    <%- include('parts/footer') %>

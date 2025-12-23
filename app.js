@@ -2,9 +2,12 @@ const express = require('express');
 const path = require('path');
 const dotenv = require('dotenv');
 const connectDB = require('./db/connect');
+const bodyParser = require('body-parser');
 dotenv.config();
-const productsRouter = require('./routes/Products');
+const homeRouter = require('./routes/homeRouter');
+const productsRouter = require('./routes/productsRouter');
 const app = express();
+bodyParser.urlencoded({ extended: false });
 const port = 3000;
 
 app.use(express.json());
@@ -13,7 +16,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.set('view engine', 'ejs');
-app.use('/', productsRouter);
+app.use('/', homeRouter);
+app.use('/product', productsRouter);
 
 const start = () => {
     connectDB(process.env.MONGO_URI);

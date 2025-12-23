@@ -1,6 +1,6 @@
 const Product = require('../models/Products');
 
-const getProducts = async (req, res) => {
+const getAllProducts = async (req, res) => {
     
     const { category } = req.query;
     const queryObject = {};
@@ -19,6 +19,7 @@ const getProducts = async (req, res) => {
 }
 
 
+
 module.exports = {
-    getProducts
+    getAllProducts
 };
