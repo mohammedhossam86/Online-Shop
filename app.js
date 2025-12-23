@@ -11,6 +11,7 @@ app.use(express.json());
 
 // Serving static files & setting view engine 
 app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, 'images')));
 app.set('view engine', 'ejs');
 app.use('/', productsRouter);
 
