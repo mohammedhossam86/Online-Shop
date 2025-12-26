@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use(express.static(path.join(__dirname, 'images')));
 app.set('view engine', 'ejs');
 app.use('/', homeRouter);
-app.use('/product', productsRouter);
+app.use('/products', productsRouter);
 
 const start = () => {
     connectDB(process.env.MONGO_URI);

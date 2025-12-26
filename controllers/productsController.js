@@ -6,7 +6,7 @@ const getProduct = async (req, res) => {
     try {
         const product = await Product.findById(id);
         console.log(product);
-        res.status(200).render('product', { product });
+        res.status(200).render('products', { product });
     }
     catch (error) {
         res.status(500).send('Server Error');
