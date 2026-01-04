@@ -10,7 +10,10 @@ const getAllProducts = async (req, res) => {
     }
     try {
         const products = await Product.find(queryObject);
-        res.status(200).render('index', { products });
+        res.status(200).render('index', {
+            products,
+            isUser: req.userId,
+        });
     }
     catch (error) {
         res.status(500).send('Server Error');

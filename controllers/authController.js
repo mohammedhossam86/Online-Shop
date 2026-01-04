@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
 
 const getsignup = async (req, res) => {
-    res.render('signup');
+    res.render('signup',{isUser:req.userId});
  };
 
 const postsignup = async (req, res) => { 
@@ -32,23 +32,25 @@ const postsignup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-    res.render('login');
+    res.render('login',{err: null,isUser:req.userId});
 };
 
 const postlogin = async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
-        if(!user) {
-            return res.status(400).send('Invalid email or password');
+        const Err = []
+        if (!user) {
+            return res.render('login' , {err: 'Invalid email or password'})
         }
         const isMatch = await bcrypt.compare(password, user.password);
         if(!isMatch) {
-            return res.status(400).send('Invalid email or password');
+            return res.render('login' , {err: 'Invalid email or password'})
         }
         const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
-        res.redirect('/');
+        // console.log(Err);
+        res.redirect("/");
     }
     catch (error) { 
         res.status(500).json({ message: 'Internal server error' });
@@ -56,9 +58,14 @@ const postlogin = async (req, res) => {
     }
 };
 
+const logout = async (req,res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+}
 module.exports = {
     getsignup,
     postsignup,
     login,
-    postlogin
+    postlogin,
+    logout
 };

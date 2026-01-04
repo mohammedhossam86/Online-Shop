@@ -1,0 +1,79 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container">
+
+    <% if (!items || items.length === 0) { %>
+        <p class="alert alert-danger">There is no items</p>
+    <% } else { %>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Product name</th>
+                    <th>Price</th>
+                    <th>Amount</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <% for (let i = 0; i < items.length; i++) { %>
+                    <tr>
+                        <form method="POST">
+                            <td><%= i + 1 %></td>
+
+                            <td><%= items[i].name %></td>
+
+                            <!-- FIX: price (lowercase) -->
+                            <td><%= items[i].price %> $</td>
+
+                            <td>
+                                <input 
+                                    type="number" 
+                                    name="amount" 
+                                    class="form-control"
+                                    value="<%= items[i].amount %>"
+                                    min="1"
+                                    required>
+                            </td>
+
+                            <!-- FIX: price (lowercase) -->
+                            <td>
+                                <%= items[i].price * items[i].amount %> $
+                            </td>
+
+                            <td>
+                                <input 
+                                    type="hidden" 
+                                    name="cartId" 
+                                    value="<%= items[i]._id %>">
+
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-success btn-sm"
+                                    formaction="/cart/save">
+                                    Save
+                                </button>
+
+                                <button 
+                                    type="submit" 
+                                    class="btn btn-danger btn-sm"
+                                    formaction="/cart/delete">
+                                    Delete
+                                </button>
+                            </td>
+                        </form>
+                    </tr>
+                <% } %>
+
+            </tbody>
+        </table>
+
+    <% } %>
+
+</div>
+
+<%- include('parts/footer') %>

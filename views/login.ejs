@@ -9,6 +9,12 @@
             <input type="submit" value="Create Account" class="btn btn-primary">
         </form>
         <br>
+        <% if(typeof err !== "undefined" && err){ %>
+        <div class="alert alert-danger">
+            <%= err %>
+        </div>
+        <% } %>
+        <br>
         <div>
             Don't have account ? <a href="/signup">Create Account</a>
         </div>

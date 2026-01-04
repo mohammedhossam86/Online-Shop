@@ -4,16 +4,16 @@ const authMiddleWare = (req,res,next) => {
     const token = req.cookies.token;
     if(!token)
     {
-        return res.status(401).message("Access Denied");
+        return res.redirect('/login')
     }
     try {
         const decoded = jwt.verify(token, jwtsecret);
-        req.userId = decoded.id;
+        req.userId = decoded.userId;
         next(); 
     }
     catch (error)
     {
-        return res.status(401).json({ message: 'Invalid token' });
+        return res.redirect('/login')
     }
 }
 

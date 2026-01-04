@@ -30,8 +30,11 @@
                                         <h5 class="card-title">
                                             <p class="card-price"> Price : <%= product.price %> $</p>
                                         </h5>
-                                        <form action="/cart" method="Post">
+                                        <form action="/cart" method="Post" class="add-to-cart-form">
                                             <input type="number" name="amount" class = "form-control">
+                                            <input type="hidden" name="name"  value="<%= product.name %>">
+                                            <input type="hidden" name="price"  value="<%= product.price %>">
+                                            <input type="hidden" name="productId"  value="<%= product._id %>">
                                             <input type="submit" value="Add to cart" class = "btn btn-primary">
                                         </form>
                                     </div>
