@@ -78,3 +78,17 @@ body {
     font-size: 0.9rem;
     padding: 8px 12px;
 }
+.cart-page .btn {
+    white-space: nowrap;
+}
+
+.cart-page .table td {
+    vertical-align: middle;
+}
+.order-page .card {
+    border-radius: 14px;
+}
+
+.order-page textarea {
+    resize: none;
+}

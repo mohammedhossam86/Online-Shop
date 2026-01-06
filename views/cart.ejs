@@ -3,7 +3,26 @@
 
 <div class="container mt-5 cart-page">
 
-    <h3 class="mb-4 fw-bold">🛒 Your Cart</h3>
+    <!-- HEADER + ACTIONS -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold mb-0">🛒 Your Cart</h3>
+
+        <% if (items && items.length > 0) { %>
+            <div class="d-flex gap-2">
+                <form action="/cart/delete-all" method="POST">
+                    <button class="btn btn-outline-danger btn-sm">
+                        🗑 Delete All
+                    </button>
+                </form>
+
+                <form action="/orders/create" method="POST">
+                    <button class="btn btn-success btn-sm">
+                        ✅ Order All
+                    </button>
+                </form>
+            </div>
+        <% } %>
+    </div>
 
     <% if (!items || items.length === 0) { %>
         <div class="alert alert-warning text-center">
@@ -39,8 +58,13 @@
                                 $<%= items[i].price %>
                             </td>
 
-                            <td style="max-width:120px;">
-                                <form action="/cart/save" method="POST" class="d-flex gap-2">
+                            <!-- UPDATE AMOUNT -->
+                            <td style="max-width:140px;">
+                                <form 
+                                    action="/cart/save"
+                                    method="POST"
+                                    class="d-flex gap-2">
+
                                     <input 
                                         type="number"
                                         name="amount"
@@ -54,31 +78,44 @@
                                         name="cartId"
                                         value="<%= items[i]._id %>">
 
-                                    <button 
-                                        type="submit"
-                                        class="btn btn-success btn-sm">
+                                    <button class="btn btn-success btn-sm">
                                         💾
                                     </button>
                                 </form>
                             </td>
 
+                            <!-- TOTAL -->
                             <td class="fw-bold text-success">
                                 $<%= items[i].price * items[i].amount %>
                             </td>
 
+                            <!-- ACTIONS -->
                             <td class="text-center">
-                                <form action="/cart/delete" method="POST">
-                                    <input 
-                                        type="hidden"
-                                        name="cartId"
-                                        value="<%= items[i]._id %>">
+                                <div class="d-flex justify-content-center gap-2">
 
-                                    <button 
-                                        type="submit"
-                                        class="btn btn-danger btn-sm">
-                                        🗑 Delete
-                                    </button>
-                                </form>
+                                    <!-- ORDER SINGLE -->
+                                    <form action="/orders/create-one" method="POST">
+                                        <input 
+                                            type="hidden"
+                                            name="cartId"
+                                            value="<%= items[i]._id %>">
+                                        <button class="btn btn-primary btn-sm">
+                                            🛍 Order
+                                        </button>
+                                    </form>
+
+                                    <!-- DELETE SINGLE -->
+                                    <form action="/cart/delete" method="POST">
+                                        <input 
+                                            type="hidden"
+                                            name="cartId"
+                                            value="<%= items[i]._id %>">
+                                        <button class="btn btn-danger btn-sm">
+                                            🗑
+                                        </button>
+                                    </form>
+
+                                </div>
                             </td>
 
                         </tr>

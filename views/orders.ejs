@@ -1,0 +1,141 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container mt-5 order-page">
+
+    <h3 class="fw-bold mb-4">📦 Place Your Order</h3>
+
+    <form action="/orders/confirm" method="POST">
+
+        <div class="row g-4">
+
+            <!-- SHIPPING ADDRESS -->
+            <div class="col-12 col-lg-7">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <h5 class="fw-bold mb-3">🚚 Shipping Address</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input 
+                            type="text"
+                            name="fullName"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input 
+                            type="text"
+                            name="phone"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">City</label>
+                        <input 
+                            type="text"
+                            name="city"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Full Address</label>
+                        <textarea 
+                            name="address"
+                            class="form-control"
+                            rows="3"
+                            required></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ORDER SUMMARY -->
+            <div class="col-12 col-lg-5">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <h5 class="fw-bold mb-3">🧾 Order Summary</h5>
+
+                    <ul class="list-group mb-3">
+
+                        <% items.forEach(item => { %>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div>
+                                    <strong><%= item.name %></strong>
+                                    <br>
+                                    <small class="text-muted">
+                                        Qty: <%= item.amount %>
+                                    </small>
+                                </div>
+                                <span>
+                                    $<%= item.price * item.amount %>
+                                </span>
+                            </li>
+                        <% }) %>
+
+                    </ul>
+
+                    <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
+                        <span>Total</span>
+                    </div>
+
+                    <!-- PAYMENT -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Payment Method
+                        </label>
+
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input"
+                                type="radio"
+                                name="payment"
+                                value="cod"
+                                checked>
+                            <label class="form-check-label">
+                                Cash on Delivery
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input"
+                                type="radio"
+                                name="payment"
+                                value="cod"
+                                checked>
+                            <label class="form-check-label">
+                                Vica
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input"
+                                type="radio"
+                                name="payment"
+                                value="cod"
+                                checked>
+                            <label class="form-check-label">
+                                Creditcard
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-success w-100 btn-lg">
+                        ✅ Confirm Order
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<%- include('parts/footer') %>

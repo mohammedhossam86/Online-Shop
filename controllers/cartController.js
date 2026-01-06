@@ -43,9 +43,28 @@ const postCart = async (req,res) => {
         console.log(arr);
     }
 }
-const postdelete = async (req,res) => {
+
+const postdelete = async (req, res) => {
     try {
         await Cart.deleteOne({ _id: req.body.cartId });
+        // const xx = Cart.findById({ _id: req.body.cartId });
+        console.log(req.body.cartId);
+        res.redirect('/cart');
+    } catch (arr)
+    {
+        console.log(arr);
+    }
+}
+
+const postdeleteAll = async (req,res) => {
+    try {
+        const data = await Cart.find()
+        data.forEach(async item => {
+            // console.log(item._id);
+            // console.log(item.productId);
+            // console.log(item.userId);
+            await Cart.deleteOne({ _id: item._id });
+        })
         res.redirect('/cart');
     } catch (arr)
     {
@@ -56,5 +75,7 @@ const postdelete = async (req,res) => {
 module.exports = {
     postCart,
     getCart,
-    save,postdelete
+    save,
+    postdelete,
+    postdeleteAll
 }
