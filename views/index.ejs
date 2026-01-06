@@ -1,49 +1,86 @@
 <%- include('parts/header') %>
-    <%- include('parts/navbar') %>
+<%- include('parts/navbar') %>
 
+<div class="container mt-4 shop-page">
 
-        <div class="container">
-            <form action="/" method="get">
-                <select name="category" class="form-control">
-                    <option value="all">All</option>
+    <!-- FILTER -->
+    <form action="/" method="get" class="filter-bar mb-4">
+        <div class="row g-2 align-items-center">
+            <div class="col-8 col-md-4">
+                <select name="category" class="form-select">
+                    <option value="all">All Categories</option>
                     <option value="phones">Phones</option>
                     <option value="laptops">Laptops</option>
                 </select>
-                <input type="submit" class="btn btn-primary" value="Filter">
-            </form>
-            
-            <% if(products.length === 0 ){ %>
-                <div class = "alert alert-danger"> 
-                    There is no products
-                </div>
-                <% } else { %>
-                    <div class="row">
-                        <% products.forEach(product => { %>
-                            <div class="col-12 col-md-6 col-lg-4 col-xl-3">
-                                <div class="card" style="width: 18rem;">
-                                    <img src="<%= product.image %>" class="card-img-top" alt="products.image">
-                                    <div class="card-body">
-                                        <h5 class="card-title">
-                                            <a href="/products/<%= product._id %>"><%= product.name %></a>
-                                        </h5>
-                                        <p class="card-text"><%= product.description %></p>
-                                        <h5 class="card-title">
-                                            <p class="card-price"> Price : <%= product.price %> $</p>
-                                        </h5>
-                                        <form action="/cart" method="Post" class="add-to-cart-form">
-                                            <input type="number" name="amount" class = "form-control">
-                                            <input type="hidden" name="name"  value="<%= product.name %>">
-                                            <input type="hidden" name="price"  value="<%= product.price %>">
-                                            <input type="hidden" name="productId"  value="<%= product._id %>">
-                                            <input type="submit" value="Add to cart" class = "btn btn-primary">
-                                        </form>
-                                    </div>
+            </div>
+            <div class="col-4 col-md-2">
+                <button class="btn btn-primary w-100">Filter</button>
+            </div>
+        </div>
+    </form>
+
+    <% if (products.length === 0) { %>
+        <div class="alert alert-warning text-center">
+            No products available
+        </div>
+    <% } else { %>
+
+        <div class="row g-4">
+
+            <% products.forEach(product => { %>
+
+                <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                    <div class="card product-card h-100">
+
+                        <div class="product-img-wrapper">
+                            <img 
+                                src="<%= product.image %>"
+                                class="card-img-top product-img"
+                                alt="<%= product.name %>">
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+
+                            <h5 class="card-title product-title">
+                                <a href="/products/<%= product._id %>">
+                                    <%= product.name %>
+                                </a>
+                            </h5>
+
+                            <p class="product-price mt-auto">
+                                $<%= product.price %>
+                            </p>
+
+                            <form action="/cart" method="POST" class="mt-2">
+                                <input type="hidden" name="name" value="<%= product.name %>">
+                                <input type="hidden" name="price" value="<%= product.price %>">
+                                <input type="hidden" name="productId" value="<%= product._id %>">
+
+                                <div class="input-group">
+                                    <input 
+                                        type="number"
+                                        name="amount"
+                                        class="form-control"
+                                        min="1"
+                                        value="1"
+                                        required>
+
+                                    <button class="btn btn-primary">
+                                        Add
+                                    </button>
                                 </div>
-                            </div>
-                            <% }) %>
+                            </form>
+
+                        </div>
                     </div>
-                <% } %>
+                </div>
+
+            <% }) %>
 
         </div>
 
-        <%- include('parts/footer') %>
+    <% } %>
+
+</div>
+
+<%- include('parts/footer') %>

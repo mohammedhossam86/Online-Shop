@@ -1,0 +1,80 @@
+body {
+    background: #f4f6f9;
+}
+
+.app-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.product-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.product-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.price-text {
+    font-weight: bold;
+    color: #0d6efd;
+    font-size: 1.1rem;
+}
+
+.auth-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background: white;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+}
+.cart-page h3 {
+    color: #212529;
+}
+
+.cart-table td,
+.cart-table th {
+    vertical-align: middle;
+}
+
+.cart-item-row:hover {
+    background-color: #f8f9fa;
+}
+.product-details-page {
+    max-width: 1100px;
+}
+
+.product-image-wrapper {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.product-details-img {
+    max-height: 420px;
+    object-fit: contain;
+}
+
+.add-to-cart-form button {
+    font-size: 1.1rem;
+}
+
+.product-features .badge {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+}

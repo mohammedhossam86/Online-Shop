@@ -1,19 +1,64 @@
 <%- include('parts/header') %>
-    <%- include('parts/navbar') %>
+<%- include('parts/navbar') %>
 
-    <div class="container text-center">
-        <h3>Create Account</h3>
-        <form action="/signup" method="POST">
-            <input type="text" class="form-control" name="username" placeholder="Username">
-            <input type="email" class="form-control" name="email" placeholder="E-mail">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <input type="password" class="form-control" name="confirmpasswod" placeholder="Confirm Password">
-            <input type="submit" value="Create Account" class="btn btn-primary">
+<div class="container auth-container">
+
+    <div class="auth-card shadow-lg">
+        <h3 class="mb-4 text-center fw-bold">📝 Create Account</h3>
+
+        <form action="/signup" method="POST" class="auth-form">
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input 
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="Enter username"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input 
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter email"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input 
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter password"
+                    required>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Confirm Password</label>
+                <input 
+                    type="password"
+                    name="confirmpasswod"
+                    class="form-control"
+                    placeholder="Confirm password"
+                    required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">
+                Create Account
+            </button>
         </form>
-        <br>
-        <div>
-            Already have account ? <a href="/login">Login</a>
+
+        <div class="text-center mt-4">
+            Already have an account?
+            <a href="/login" class="fw-semibold">Login</a>
         </div>
     </div>
 
-    <%- include('parts/footer') %>
+</div>
+
+<%- include('parts/footer') %>

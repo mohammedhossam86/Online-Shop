@@ -15,6 +15,8 @@ const attachUser = require('./middlewares/attachUser');
 
 bodyParser.urlencoded({ extended: false });
 const port = 3000;
+app.use(express.static('public'));
+
 
 // Middleware
 app.use(express.json());

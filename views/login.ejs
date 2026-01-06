@@ -1,23 +1,50 @@
 <%- include('parts/header') %>
-    <%- include('parts/navbar') %>
+<%- include('parts/navbar') %>
 
-    <div class="container text-center">
-        <h3>Login</h3>
-        <form action="/login" method="POST">
-            <input type="email" class="form-control" name="email" placeholder="E-mail">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <input type="submit" value="Create Account" class="btn btn-primary">
+<div class="container auth-container">
+
+    <div class="auth-card shadow-lg">
+        <h3 class="mb-4 text-center fw-bold">🔐 Login</h3>
+
+        <form action="/login" method="POST" class="auth-form">
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input 
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="Enter your email"
+                    required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input 
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    required>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">
+                Login
+            </button>
         </form>
-        <br>
-        <% if(typeof err !== "undefined" && err){ %>
-        <div class="alert alert-danger">
-            <%= err %>
-        </div>
+
+        <% if (typeof err !== "undefined" && err) { %>
+            <div class="alert alert-danger mt-3 text-center">
+                <%= err %>
+            </div>
         <% } %>
-        <br>
-        <div>
-            Don't have account ? <a href="/signup">Create Account</a>
+
+        <div class="text-center mt-4">
+            Don’t have an account?
+            <a href="/signup" class="fw-semibold">Create one</a>
         </div>
     </div>
 
-    <%- include('parts/footer') %>
+</div>
+
+<%- include('parts/footer') %>
