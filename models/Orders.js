@@ -16,4 +16,4 @@ const orderSchema = mongoose.Schema({
     FullAddress: String,
 })
 
-module.exports = mongoose.model('Order', orderSchema);
+module.exports = mongoose.model('Order', orderSchema);  

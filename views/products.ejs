@@ -1,72 +1,94 @@
 <%- include('parts/header') %>
 <%- include('parts/navbar') %>
 
-<div class="container mt-5 product-details-page">
+<div class="container mt-5 product-page">
 
-    <% if (!product) { %>
-        <div class="alert alert-danger text-center">
-            There is no product matching this ID
-        </div>
-    <% } else { %>
+<% if (!product) { %>
+    <div class="alert alert-danger text-center">
+        Product not found
+    </div>
+<% } else { %>
 
-        <div class="row g-5 align-items-center">
+<div class="row g-4">
 
-            <!-- Product Image -->
-            <div class="col-12 col-md-6 text-center">
-                <div class="product-image-wrapper shadow-sm">
-                    <img 
-                        src="/<%= product.image %>"
-                        class="img-fluid product-details-img"
-                        alt="<%= product.name %>">
-                </div>
-
-                <form action="/cart" method="POST" class="mt-4 add-to-cart-form">
-                    <input type="hidden" name="name" value="<%= product.name %>">
-                    <input type="hidden" name="price" value="<%= product.price %>">
-                    <input type="hidden" name="productId" value="<%= product._id %>">
-                    <div class="input-group mb-3 justify-content-center">
-                        <span class="input-group-text">Qty</span>
-                        <input 
-                            type="number"
-                            name="amount"
-                            class="form-control text-center"
-                            min="1"
-                            value="1"
-                            required>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary px-5">
-                        🛒 Add to Cart
-                    </button>
-                </form>
-            </div>
-
-            <!-- Product Info -->
-            <div class="col-12 col-md-6">
-
-                <h2 class="fw-bold mb-3">
-                    <%= product.name %>
-                </h2>
-
-                <h4 class="text-primary mb-3">
-                    $<%= product.price %>
-                </h4>
-
-                <p class="text-muted fs-5">
-                    <%= product.description %>
-                </p>
-
-                <div class="product-features mt-4">
-                    <span class="badge bg-success me-2">In Stock</span>
-                    <span class="badge bg-info">Fast Delivery</span>
-                </div>
-
-            </div>
-
+    <!-- LEFT: IMAGES -->
+    <div class="col-md-5">
+        <div class="main-image border rounded mb-3">
+            <img src="/<%= product.image %>" class="img-fluid" alt="<%= product.name %>">
         </div>
 
-    <% } %>
+        <!-- Thumbnails (future-ready) -->
+        <div class="d-flex gap-2">
+            <img src="/<%= product.image %>" class="thumb-img active">
+            <img src="/<%= product.image %>" class="thumb-img">
+            <img src="/<%= product.image %>" class="thumb-img">
+        </div>
+    </div>
 
+    <!-- RIGHT: PRODUCT INFO -->
+    <div class="col-md-7">
+
+        <h2 class="fw-bold"><%= product.name %></h2>
+
+        <!-- Rating -->
+        <div class="mb-2">
+            ⭐⭐⭐⭐☆ 
+            <span class="text-muted">(124 ratings)</span>
+        </div>
+
+        <h3 class="text-danger fw-bold mb-3">
+            $<%= product.price %>
+        </h3>
+
+        <p class="text-muted">
+            <%= product.description %>
+        </p>
+
+        <hr>
+
+        <!-- Stock -->
+        <p class="text-success fw-semibold">
+            ✔ In Stock
+        </p>
+
+        <!-- Add to Cart -->
+        <form action="/cart" method="POST" class="d-flex align-items-center gap-3">
+            <input type="hidden" name="productId" value="<%= product._id %>">
+            <input type="hidden" name="name" value="<%= product.name %>">
+            <input type="hidden" name="price" value="<%= product.price %>">
+
+            <input 
+                type="number"
+                name="amount"
+                class="form-control qty-input"
+                min="1"
+                value="1"
+            >
+
+            <button type="submit" class="btn btn-warning btn-lg">
+                🛒 Add to Cart
+            </button>
+        </form>
+
+        <!-- Extra Info -->
+        <div class="mt-4 small text-muted">
+            🚚 Free delivery in 2 days <br>
+            🔄 14 days return policy
+        </div>
+
+    </div>
+</div>
+
+<!-- DETAILS SECTION -->
+<div class="mt-5">
+    <h4 class="fw-bold">Product Details</h4>
+    <p>
+        <%= product.description %>
+    </p>
+</div>
+
+
+<% } %>
 </div>
 
 <%- include('parts/footer') %>

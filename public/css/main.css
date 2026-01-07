@@ -92,3 +92,25 @@ body {
 .order-page textarea {
     resize: none;
 }
+.main-image img {
+    width: 100%;
+    height: auto;
+}
+
+.thumb-img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.thumb-img.active {
+    border-color: #0d6efd;
+}
+
+.qty-input {
+    width: 90px;
+    text-align: center;
+}
