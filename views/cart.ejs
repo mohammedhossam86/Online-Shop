@@ -15,7 +15,14 @@
                     </button>
                 </form>
 
-                <form action="/orders/create" method="POST">
+                <form action="/confirm-orders/create" method="POST">
+                    <% items.forEach(item => { %>
+                        <input 
+                            type="hidden"
+                            name="cartId"
+                            value="<%= [item._id] %>">
+                    <% }) %>
+
                     <button class="btn btn-success btn-sm">
                         ✅ Order All
                     </button>
@@ -94,10 +101,10 @@
                                 <div class="d-flex justify-content-center gap-2">
 
                                     <!-- ORDER SINGLE -->
-                                    <form action="/orders/create-one" method="POST">
+                                    <form action="/confirm-orders/create-one" method="POST">
                                         <input 
                                             type="hidden"
-                                            name="cartId"
+                                            name="cartId[]"
                                             value="<%= items[i]._id %>">
                                         <button class="btn btn-primary btn-sm">
                                             🛍 Order

@@ -8,7 +8,7 @@ const homeRouter = require('./routes/homeRouter');
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
 const cartRouter = require('./routes/cartRouter')
-const orderRouter = require('./routes/orderRouter')
+const confirmOrdersController = require('./routes/confirmOrdersRouter')
 const app = express();
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
@@ -35,7 +35,7 @@ app.use('/', homeRouter);
 app.use('/', authRouter);
 app.use('/products', productsRouter);
 app.use('/cart' , cartRouter)
-app.use('/orders' , orderRouter)
+app.use('/confirm-orders' , confirmOrdersController)
 
 const start = async () => {
     await connectDB(process.env.MONGO_URI);

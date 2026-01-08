@@ -14,6 +14,11 @@ const orderSchema = mongoose.Schema({
     },
     City: String,
     FullAddress: String,
+    // name: String,
+    // amount, Number,
+    // price, Number,
+    // productId: String,
+
 })
 
 module.exports = mongoose.model('Order', orderSchema);  

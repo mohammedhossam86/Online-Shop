@@ -9,7 +9,13 @@
 
         <div class="row g-4">
 
-            <!-- SHIPPING ADDRESS -->
+            <%
+                let totalPrice = 0;
+                items.forEach(item => {
+                    totalPrice += item.price * item.amount;
+                });
+            %>
+
             <div class="col-12 col-lg-7">
                 <div class="card shadow-sm p-4 h-100">
 
@@ -54,16 +60,14 @@
                 </div>
             </div>
 
-            <!-- ORDER SUMMARY -->
             <div class="col-12 col-lg-5">
                 <div class="card shadow-sm p-4 h-100">
 
                     <h5 class="fw-bold mb-3">🧾 Order Summary</h5>
 
                     <ul class="list-group mb-3">
-
                         <% items.forEach(item => { %>
-                            <li class="list-group-item d-flex justify-content-between">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <strong><%= item.name %></strong>
                                     <br>
@@ -71,19 +75,22 @@
                                         Qty: <%= item.amount %>
                                     </small>
                                 </div>
-                                <span>
+                                <span class="fw-semibold">
                                     $<%= item.price * item.amount %>
                                 </span>
                             </li>
                         <% }) %>
-
                     </ul>
 
                     <div class="d-flex justify-content-between fw-bold fs-5 mb-3">
                         <span>Total</span>
+                        <span class="text-success">
+                            $<%= totalPrice %>
+                        </span>
                     </div>
 
-                    <!-- PAYMENT -->
+                    <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
+
                     <div class="mb-3">
                         <label class="form-label fw-semibold">
                             Payment Method
@@ -100,29 +107,28 @@
                                 Cash on Delivery
                             </label>
                         </div>
+
                         <div class="form-check">
                             <input 
                                 class="form-check-input"
                                 type="radio"
                                 name="payment"
-                                value="cod"
-                                checked>
+                                value="visa">
                             <label class="form-check-label">
-                                Vica
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input 
-                                class="form-check-input"
-                                type="radio"
-                                name="payment"
-                                value="cod"
-                                checked>
-                            <label class="form-check-label">
-                                Creditcard
+                                Visa
                             </label>
                         </div>
 
+                        <div class="form-check">
+                            <input 
+                                class="form-check-input"
+                                type="radio"
+                                name="payment"
+                                value="credit">
+                            <label class="form-check-label">
+                                Credit Card
+                            </label>
+                        </div>
                     </div>
 
                     <button class="btn btn-success w-100 btn-lg">
