@@ -21,6 +21,7 @@ const postSingleOrder = async (req, res) => {
         console.log(err);
     }
 }
+
 const postAllOrder = async (req, res) => {
     try{
         const cartId = req.body.cartId;
@@ -37,4 +38,5 @@ const postAllOrder = async (req, res) => {
         console.log(err);
     }
 }
+
 module.exports = { getOrders , postSingleOrder, postAllOrder};

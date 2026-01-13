@@ -1,0 +1,92 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container mt-5">
+
+    <h3 class="fw-bold mb-4">🛒 My Orders</h3>
+
+    <% if (orders.length === 0) { %>
+        <div class="alert alert-info text-center">
+            You have no orders yet.
+        </div>
+    <% } %>
+
+    <div class="row g-4">
+
+        <% orders.forEach(order => { %>
+
+            <div class="col-12">
+                <div class="card shadow-sm p-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Order #<%= order._id %></h5>
+                            <small class="text-muted">
+                                Placed on <%= order.createdAt.toDateString() %>
+                            </small>
+                        </div>
+
+                        <span class="
+                            badge 
+                            <% if (order.status === 'Pending') { %> bg-warning text-dark <% } %>
+                            <% if (order.status === 'Shipped') { %> bg-primary <% } %>
+                            <% if (order.status === 'Delivered') { %> bg-success <% } %>
+                            <% if (order.status === 'Canceled') { %> bg-danger <% } %>
+                        ">
+                            <%= order.status %>
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <h6 class="fw-bold mb-2">🧾 Order Items</h6>
+                        <ul class="list-group">
+                            <% order.cartsId.forEach(id => { %>
+                                <li class="list-group-item">
+                                    Product ID: <%= id %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-8">
+                            <div class="border rounded p-3 h-100">
+                                <h6 class="fw-bold mb-2">📦 Shipping Details</h6>
+                                <p class="mb-1"><strong>Name:</strong> <%= order.fullName %></p>
+                                <p class="mb-1"><strong>Phone:</strong> <%= order.phone %></p>
+                                <p class="mb-1"><strong>City:</strong> <%= order.city %></p>
+                                <p class="mb-0"><strong>Address:</strong> <%= order.address %></p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4 d-flex align-items-end">
+                            <% if (order.status === 'Pending') { %>
+                                <form action="/orders/<%= order._id %>/cancel" method="POST" class="w-100">
+                                    <button 
+                                        type="submit"
+                                        class="btn btn-outline-danger w-100">
+                                        ❌ Cancel Order
+                                    </button>
+                                </form>
+                            <% } else { %>
+                                <button 
+                                    class="btn btn-secondary w-100"
+                                    disabled>
+                                    Order <%= order.status %>
+                                </button>
+                            <% } %>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        <% }) %>
+
+    </div>
+
+</div>
+
+<%- include('parts/footer') %>

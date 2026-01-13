@@ -23,19 +23,34 @@ const save = async (req,res) => {
     }
 }
 
-
 const postCart = async (req,res) => {
     try {
-        const data = {
-            name: req.body.name,
-            price: req.body.price,
-            amount: req.body.amount,
-            productId: req.body.productId,
-            userId: req.userId,
-            timestamp: new Date()
-        };
-        // console.log(data.timestamp);
-        await Cart.create(data);
+        const {
+            name,
+            price,
+            amount,
+            productId
+        } = req.body;
+        const userId = req.userId;
+        const existingProduct = await Cart.findOne({
+            productId: productId,
+            userId: userId
+        });
+        
+        if(!existingProduct)
+            await Cart.create({
+                    name,
+                    price,
+                    amount,
+                    productId,
+                    userId,
+                    timestamp: new Date()
+            });
+        else
+            await Cart.findOneAndUpdate(
+                { productId: productId, userId: userId },
+                { $inc: { amount: amount } }
+            );
         res.redirect('/cart');
         
     } catch (arr)

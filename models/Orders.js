@@ -1,24 +1,53 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const orderSchema = mongoose.Schema({
-    FullName: {Type: String, required : true},
-    phoneNumber: {
-        Type: String,
-        required: true,
-        validate: {
-            validator: (v) => {
-                return validator.isMobilePhone(phoneNumber, 'ar-EG');
-            },
-            message: props => `${props.value} is not a valid phone number!`
-        }
+
+const orderSchema = new mongoose.Schema(
+  {
+    fullName: {
+      type: String,
+      required: true
     },
-    City: String,
-    FullAddress: String,
-    // name: String,
-    // amount, Number,
-    // price, Number,
-    // productId: String,
 
-})
+    phone: {
+      type: String,
+      required: true,
+      validate: {
+        validator: function (v) {
+          return validator.isMobilePhone(v, 'ar-EG');
+        },
+        message: props => `${props.value} is not a valid phone number`
+      }
+    },
 
-module.exports = mongoose.model('Order', orderSchema);  
+    city: {
+      type: String,
+      required: true
+    },
+
+    address: {
+      type: String,
+      required: true
+    },
+
+    cartsId: {
+      type: [String],
+      required: true
+    },
+
+    status: {
+      type: String,
+      default: 'Delivered',
+      enum: ['Pending', 'Shipped', 'Delivered', 'Canceled']
+    },
+    paymentMethod: {
+        type: String,
+        default: 'cod',
+        enum:['cod' , 'visa' , 'credit']
+    },
+  },
+  {
+    timestamps: true
+  }
+);
+
+module.exports = mongoose.model('Order', orderSchema);

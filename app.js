@@ -8,7 +8,8 @@ const homeRouter = require('./routes/homeRouter');
 const productsRouter = require('./routes/productsRouter');
 const authRouter = require('./routes/authRouter');
 const cartRouter = require('./routes/cartRouter')
-const confirmOrdersController = require('./routes/confirmOrdersRouter')
+const confirmOrdersRouter = require('./routes/confirmOrdersRouter')
+const ordersRouter = require('./routes/ordersRouter');
 const app = express();
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
@@ -35,8 +36,9 @@ app.use('/', homeRouter);
 app.use('/', authRouter);
 app.use('/products', productsRouter);
 app.use('/cart' , cartRouter)
-app.use('/confirm-orders' , confirmOrdersController)
-
+app.use('/confirm-orders', confirmOrdersRouter)
+app.use('/orders', ordersRouter);
+// Router
 const start = async () => {
     await connectDB(process.env.MONGO_URI);
     app.listen(port, () => {
