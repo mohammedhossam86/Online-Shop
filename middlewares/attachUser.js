@@ -12,6 +12,7 @@ const attachUser = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         res.locals.isUser = decoded.userId;
         req.userId = decoded.userId;
+        req.role = decoded.role;
     } catch {
         res.locals.isUser = null;
     }

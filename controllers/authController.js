@@ -9,7 +9,7 @@ const getsignup = async (req, res) => {
 
 const postsignup = async (req, res) => { 
     try {
-        const { username, email, password, confirmpasswod } = req.body;
+        const { username, email, password, confirmpasswod , role } = req.body;
         const hashedPassword = await bcrypt.hash(password, 14);
         const Taken = await User.findOne({ email });
         if (Taken) {
@@ -19,7 +19,9 @@ const postsignup = async (req, res) => {
         if (password !== confirmpasswod) {
             return res.status(400).send('Passwords do not match');
         }
-        const user = await User.create({ username, email, password: hashedPassword });
+        const allowedRoles = ["customer", "provider"];
+        const safeRole = allowedRoles.includes(role) ? role : "customer";
+        const user = await User.create({ username, email, password: hashedPassword, role:safeRole });
         res.redirect('/login');
     }
     catch (error) {
@@ -37,7 +39,7 @@ const login = async (req, res) => {
 
 const postlogin = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password  } = req.body;
         const user = await User.findOne({ email });
         const Err = []
         if (!user) {
@@ -47,9 +49,10 @@ const postlogin = async (req, res) => {
         if(!isMatch) {
             return res.render('login' , {err: 'Invalid email or password'})
         }
-        const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id, role:user.role }, jwtSecret, { expiresIn: '1h' });
         res.cookie('token', token, { httpOnly: true });
         // console.log(Err);
+        console.log(user);
         res.redirect("/");
     }
     catch (error) { 

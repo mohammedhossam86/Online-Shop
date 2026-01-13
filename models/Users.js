@@ -16,5 +16,11 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password must be provided"],
         minlength: [6, "Password must be at least 6 characters"]
     },
+    role: {
+        type: String,
+        required: true,
+        default: "customer",
+        enum:["customer" , "Admin" , "provider"]
+    }
 });
 module.exports = mongoose.model('User', userSchema);

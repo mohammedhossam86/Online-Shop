@@ -2,7 +2,7 @@ const Cart = require('../models/Carts')
 
 const getCart = async (req,res) => {
         const items = await Cart.aggregate([{ $sort: { timestamp: 1 } }]).exec();
-    
+        console.log(req.role);
         res.render('cart' , {items});
 }
 

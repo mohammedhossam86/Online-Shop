@@ -9,6 +9,7 @@ const authMiddleWare = (req,res,next) => {
     try {
         const decoded = jwt.verify(token, jwtsecret);
         req.userId = decoded.userId;
+        req.role = decoded.role;
         next(); 
     }
     catch (error)
