@@ -4,6 +4,7 @@ const getOrders = async (req, res) => {
     const items = [];
     res.render('confirm-orders', { items });
 } 
+
 const postSingleOrder = async (req, res) => {
     try{
         const cartId = req.body.cartId;

@@ -1,5 +1,5 @@
 const Order = require('../models/Orders');
-
+const Cart = require('../models/Carts');
 const summary = async (req, res) => {
     const orders = await Order.find();
     res.render('orders' , {orders})
@@ -19,7 +19,18 @@ const confirm = async (req , res) => {
         paymentMethod:req.body.payment
     }    
     console.log(data);
-    const order = await Order.create( data );
+    const order = await Order.create(data);
+    if (Array.isArray(cartsId))
+    {
+        for (let i = 0; i < cartsId.length ; i++)
+        {
+            await Cart.deleteOne({_id:cartsId[i]});
+        }
+    }
+    else
+        await Cart.deleteOne({_id :cartsId});
+        
+    
     res.redirect('/orders');
 
 }
