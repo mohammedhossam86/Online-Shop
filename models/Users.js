@@ -23,4 +23,17 @@ const userSchema = new mongoose.Schema({
         enum:["customer" , "Admin" , "provider"]
     }
 });
+
+userSchema.methods.isCustomer = function () { 
+    return this.role === 'customer';
+}
+userSchema.methods.isAdmin = function () { 
+    return this.role === 'Admin';
+}
+userSchema.methods.isProvider = function () { 
+    return this.role === 'provider';
+}
+userSchema.methods.hasRole = function (...roles) {
+    return roles.includes(this.role);
+};
 module.exports = mongoose.model('User', userSchema);

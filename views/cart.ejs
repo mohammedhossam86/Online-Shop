@@ -15,7 +15,7 @@
                     </button>
                 </form>
 
-                <form action="/confirm-orders/confirm" method="POST">
+                <form action="/confirm-orders" method="POST">
                     <% items.forEach(item => { %>
                         <input 
                             type="hidden"
@@ -101,7 +101,7 @@
                                 <div class="d-flex justify-content-center gap-2">
 
                                     <!-- ORDER SINGLE -->
-                                    <form action="/confirm-orders/confirm-one" method="POST">
+                                    <form action="/confirm-orders" method="POST">
                                         <input 
                                             type="hidden"
                                             name="cartId[]"

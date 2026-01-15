@@ -14,7 +14,6 @@ const app = express();
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 const attachUser = require('./middlewares/attachUser');
-
 bodyParser.urlencoded({ extended: false });
 const port = 3000;
 app.use(express.static('public'));
@@ -38,6 +37,7 @@ app.use('/products', productsRouter);
 app.use('/cart' , cartRouter)
 app.use('/confirm-orders', confirmOrdersRouter)
 app.use('/orders', ordersRouter);
+// app.use('/provider/add', addProductRouter);
 // Router
 const start = async () => {
     await connectDB(process.env.MONGO_URI);

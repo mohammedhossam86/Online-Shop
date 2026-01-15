@@ -1,0 +1,93 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container mt-5">
+
+    <h3 class="fw-bold mb-4">📦 My Products</h3>
+
+    <% if (products.length === 0) { %>
+        <div class="alert alert-info">
+            You haven’t added any products yet.
+        </div>
+    <% } else { %>
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% products.forEach(product => { %>
+                        <tr>
+                            <td>
+                                <img 
+                                    src="<%= product.image %>" 
+                                    alt="<%= product.name %>"
+                                    width="60"
+                                    height="60"
+                                    class="rounded"
+                                >
+                            </td>
+
+                            <td>
+                                <strong><%= product.name %></strong>
+                            </td>
+
+                            <td>
+                                <span class="badge bg-secondary">
+                                    <%= product.category %>
+                                </span>
+                            </td>
+
+                            <td>
+                                $<%= product.price %>
+                            </td>
+
+                            <td>
+                                <%= product.stock %>
+                            </td>
+
+                            <td>
+                                <% if (product.stock > 0) { %>
+                                    <span class="badge bg-success">In Stock</span>
+                                <% } else { %>
+                                    <span class="badge bg-danger">Out of Stock</span>
+                                <% } %>
+                            </td>
+
+                            <td class="d-flex gap-2">
+                                <a 
+                                    href="/products/<%= product._id %>/edit" 
+                                    class="btn btn-sm btn-warning">
+                                    Edit
+                                </a>
+
+                                <form 
+                                    action="/products/<%= product._id %>?_method=DELETE" 
+                                    method="POST"
+                                >
+                                    <button class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+
+    <% } %>
+
+</div>
+
+<%- include('parts/footer') %>

@@ -1,4 +1,5 @@
 const Product = require('../models/Products');
+const categories = require('../config/categories');
 
 const getProduct = async (req, res) => { 
     // render single product details page
@@ -17,7 +18,20 @@ const redirectHome = async (req, res) => {
     res.status(302).redirect('/');
 }
 
+const getAddProducts = async (req, res) => {
+    res.render('add-products', {
+        categories,
+    });
+}
+
+const getProvidersProducts = async (req, res) => { 
+    const products = await Product.find({ provider: req.userId });
+    res.render('provider-products', { products });
+}
+
 module.exports = {
     getProduct,
-    redirectHome
+    redirectHome,
+    getAddProducts,
+    getProvidersProducts
 };

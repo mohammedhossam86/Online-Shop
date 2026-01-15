@@ -1,0 +1,89 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container mt-5">
+
+    <h3 class="fw-bold mb-4">➕ Add New Product</h3>
+
+    <!-- ✅ IMPORTANT: multipart for image upload -->
+    <form action="/products" method="POST" enctype="multipart/form-data">
+
+        <div class="row g-4">
+
+            <div class="col-12 col-lg-7">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <div class="mb-3">
+                        <label class="form-label">Product Name</label>
+                        <input 
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            required>
+                    </div>
+
+                    <!-- ✅ IMAGE UPLOAD FROM COMPUTER -->
+                    <div class="mb-3">
+                        <label class="form-label">Product Image</label>
+                        <input 
+                            type="file"
+                            name="image"
+                            class="form-control"
+                            accept="image/*"
+                            required>
+                    </div>
+
+                    <!-- ✅ CATEGORY SELECTION -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-select" required>
+                            <option value="">Select category</option>
+                            <% categories.forEach(category => { %>
+                                <option value="<%= category %>">
+                                    <%= category %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input 
+                            type="number"
+                            name="price"
+                            class="form-control"
+                            min="0"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea 
+                            name="description"
+                            class="form-control"
+                            rows="4"
+                            required></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <h5 class="fw-bold mb-3">✅ Submit</h5>
+
+                    <button type="submit" class="btn btn-success w-100 btn-lg">
+                        Add Product
+                    </button>
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<%- include('parts/footer') %>

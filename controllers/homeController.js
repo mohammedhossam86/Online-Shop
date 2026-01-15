@@ -13,6 +13,7 @@ const getAllProducts = async (req, res) => {
         res.status(200).render('index', {
             products,
             isUser: req.userId,
+            role: req.role
         });
     }
     catch (error) {

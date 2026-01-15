@@ -1,43 +1,24 @@
-const Cart = require('../models/Carts')
+const Cart = require('../models/Carts');
 
 const getOrders = async (req, res) => {
-    const items = [];
-    res.render('confirm-orders', { items });
-} 
+    res.render('confirm-orders', { items: [] });
+};
 
-const postSingleOrder = async (req, res) => {
-    try{
-        const cartId = req.body.cartId;
-        const items = [];
-        for (let i = 0; i < cartId.length; i++) {
-            const item = await Cart.findById(cartId[i]);
-            items.push(item);
-        }
-        console.log(items);
+const postOrder = async (req, res) => {
+    try {
+        const cartIds = Array.isArray(req.body.cartId)
+            ? req.body.cartId
+            : [req.body.cartId];
 
-        // res.redirect('/orders');
+        const items = await Cart.find({
+            _id: { $in: cartIds }
+        });
+
         res.render('confirm-orders', { items });
-    } catch (err)
-    {
+    } catch (err) {
         console.log(err);
+        res.status(500).send('Server Error');
     }
-}
+};
 
-const postAllOrder = async (req, res) => {
-    try{
-        const cartId = req.body.cartId;
-        const items = [];
-        for (let i = 0; i < cartId.length; i++) {
-            const item = await Cart.findById(cartId[i]);
-            items.push(item);
-        }
-        console.log(items);
-        // res.redirect('/orders');
-        res.render('confirm-orders', { items });
-    } catch (err)
-    {
-        console.log(err);
-    }
-}
-
-module.exports = { getOrders , postSingleOrder, postAllOrder};
+module.exports = { getOrders, postOrder };
