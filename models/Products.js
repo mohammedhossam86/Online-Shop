@@ -8,8 +8,9 @@ const productSchema = new mongoose.Schema(
             trim: true
         },
         image: {
-            type: String,
-            required: true
+            data: Buffer,
+            contentType: String,
+            filename: String
         },
         description: {
             type: String,

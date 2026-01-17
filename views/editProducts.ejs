@@ -1,0 +1,141 @@
+<%- include('parts/header') %>
+<%- include('parts/navbar') %>
+
+<div class="container mt-5">
+
+    <h3 class="fw-bold mb-4">✏️ Edit Product</h3>
+
+    <form
+        action="/products/<%= product._id %>"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+
+        <div class="row g-4">
+
+            <!-- LEFT: FORM -->
+            <div class="col-12 col-lg-7">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <!-- PRODUCT NAME -->
+                    <div class="mb-3">
+                        <label class="form-label">Product Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            class="form-control"
+                            value="<%= product.name %>"
+                            required
+                        >
+                    </div>
+
+                    <!-- CATEGORY -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select name="category" class="form-select" required>
+                            <% categories.forEach(cat => { %>
+                                <option
+                                    value="<%= cat %>"
+                                    <%= cat === product.category ? 'selected' : '' %>
+                                >
+                                    <%= cat %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <!-- PRICE -->
+                    <div class="mb-3">
+                        <label class="form-label">Price</label>
+                        <input
+                            type="number"
+                            name="price"
+                            class="form-control"
+                            min="0"
+                            value="<%= product.price %>"
+                            required
+                        >
+                    </div>
+
+                    <!-- STOCK -->
+                    <div class="mb-3">
+                        <label class="form-label">Stock</label>
+                        <input
+                            type="number"
+                            name="stock"
+                            class="form-control"
+                            min="0"
+                            value="<%= product.stock %>"
+                            required
+                        >
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <textarea
+                            name="description"
+                            class="form-control"
+                            rows="4"
+                            required
+                        ><%= product.description %></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT: IMAGE + ACTIONS -->
+            <div class="col-12 col-lg-5">
+                <div class="card shadow-sm p-4 h-100">
+
+                    <h5 class="fw-bold mb-3">🖼 Product Image</h5>
+
+                    <!-- CURRENT IMAGE -->
+                    <div class="mb-3 text-center">
+                        <img
+                            src="/products/<%= product._id %>/image"
+                            alt="<%= product.name %>"
+                            class="img-fluid rounded border"
+                            style="max-height: 200px;"
+                        >
+                    </div>
+
+                    <!-- REPLACE IMAGE -->
+                    <div class="mb-4">
+                        <label class="form-label">Replace Image (optional)</label>
+                        <input
+                            type="file"
+                            name="image"
+                            class="form-control"
+                            accept="image/*"
+                        >
+                        <small class="text-muted">
+                            Leave empty to keep current image
+                        </small>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <button
+                        type="submit"
+                        class="btn btn-primary w-100 btn-lg mb-3"
+                    >
+                        💾 Save Changes
+                    </button>
+
+                    <a
+                        href="/products/<%= product._id %>"
+                        class="btn btn-outline-secondary w-100"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<%- include('parts/footer') %>

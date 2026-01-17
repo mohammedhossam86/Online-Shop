@@ -1,28 +1,30 @@
 const Product = require('../models/Products');
+const categories = require('../config/categories');
 
 const getAllProducts = async (req, res) => {
-    
-    const { category } = req.query;
-    const queryObject = {};
-    const categorys = ['phones', 'laptops'];
-    if (category && categorys.includes(category)) {
-        queryObject.category = category;
-    }
     try {
+        const { category } = req.query;
+        const queryObject = {};
+
+        if (category && category !== 'all' && categories.includes(category)) {
+            queryObject.category = category;
+        }
+
         const products = await Product.find(queryObject);
-        res.status(200).render('index', {
+
+        res.render('index', {
             products,
+            categories,
+            query: req.query,
             isUser: req.userId,
             role: req.role
         });
-    }
-    catch (error) {
+
+    } catch (error) {
+        console.error(error);
         res.status(500).send('Server Error');
     }
-
-}
-
-
+};
 
 module.exports = {
     getAllProducts
