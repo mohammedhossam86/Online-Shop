@@ -33,10 +33,9 @@ const orderSchema = new mongoose.Schema(
       type: [String],
       required: true
     },
-
     status: {
       type: String,
-      default: 'Delivered',
+      default: 'Pending',
       enum: ['Pending', 'Shipped', 'Delivered', 'Canceled']
     },
     paymentMethod: {
@@ -44,6 +43,11 @@ const orderSchema = new mongoose.Schema(
         default: 'cod',
         enum:['cod' , 'visa' , 'credit']
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    }
   },
   {
     timestamps: true

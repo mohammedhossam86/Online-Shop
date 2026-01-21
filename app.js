@@ -10,6 +10,7 @@ const authRouter = require('./routes/authRouter');
 const cartRouter = require('./routes/cartRouter')
 const confirmOrdersRouter = require('./routes/confirmOrdersRouter')
 const ordersRouter = require('./routes/ordersRouter');
+const errorHandler = require('./middlewares/errorHandler');
 const app = express();
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
@@ -37,6 +38,11 @@ app.use('/products', productsRouter);
 app.use('/cart' , cartRouter)
 app.use('/confirm-orders', confirmOrdersRouter)
 app.use('/orders', ordersRouter);
+app.use((req, res) => {
+    res.status(404).render('404', { title: 'Page Not Found' });
+});
+app.use(errorHandler);
+
 // app.use('/provider/add', addProductRouter);
 // Router
 const start = async () => {

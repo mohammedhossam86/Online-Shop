@@ -6,6 +6,18 @@
     <div class="auth-card shadow-lg">
         <h3 class="mb-4 text-center fw-bold">🔐 Login</h3>
 
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger text-center mb-4">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-warning text-center mb-4">
+            <%= message %>
+        </div>
+    <% } %>
+
         <form action="/login" method="POST" class="auth-form">
 
             <div class="mb-3">
@@ -32,12 +44,6 @@
                 Login
             </button>
         </form>
-
-        <% if (typeof err !== "undefined" && err) { %>
-            <div class="alert alert-danger mt-3 text-center">
-                <%= err %>
-            </div>
-        <% } %>
 
         <div class="text-center mt-4">
             Don’t have an account?

@@ -5,6 +5,18 @@
 
     <h3 class="fw-bold mb-4">🛒 My Orders</h3>
 
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger text-center mb-4">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <% if (typeof message !== 'undefined' && message) { %>
+        <div class="alert alert-warning text-center mb-4">
+            <%= message %>
+        </div>
+    <% } %>
+
     <% if (orders.length === 0) { %>
         <div class="alert alert-info text-center">
             You have no orders yet.

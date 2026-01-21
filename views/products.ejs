@@ -3,127 +3,107 @@
 
 <div class="container mt-5 product-page">
 
-<% if (!product) { %>
-    <div class="alert alert-danger text-center">
-        Product not found
-    </div>
-<% } else { %>
-
-<div class="row g-4">
-
-    <!-- LEFT: IMAGES -->
-    <div class="col-md-5">
-        <div class="main-image border rounded mb-3">
-            <img 
-                src="/products/<%= product._id %>/image" 
-                class="img-fluid"
-                alt="<%= product.name %>">
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-danger text-center mb-4">
+            <%= error %>
         </div>
+    <% } %>
 
-        <!-- Thumbnails (future-ready) -->
-        <div class="d-flex gap-2">
-            <img src="/products/<%= product._id %>/image" class="thumb-img active">
-            <img src="/products/<%= product._id %>/image" class="thumb-img">
-            <img src="/products/<%= product._id %>/image" class="thumb-img">
+    <% if (!product) { %>
+        <div class="alert alert-danger text-center">
+            Product not found
         </div>
-    </div>
+    <% } else { %>
 
-    <!-- RIGHT: PRODUCT INFO -->
-    <div class="col-md-7">
+        <div class="row g-4">
 
-        <div class="d-flex justify-content-between align-items-start">
-            <h2 class="fw-bold"><%= product.name %></h2>
+            <!-- LEFT: IMAGES -->
+            <div class="col-md-5">
+                <div class="main-image border rounded mb-3">
+                    <img 
+                        src="/products/<%= product._id %>/image" 
+                        class="img-fluid"
+                        alt="<%= product.name %>">
+                </div>
 
-            <!-- ✅ OWNER ACTIONS -->
-            <% if (isOwner) { %>
                 <div class="d-flex gap-2">
-                    <a 
-                        href="/products/<%= product._id %>/edit"
-                        class="btn btn-sm btn-outline-warning">
-                        ✏️ Edit
-                    </a>
+                    <img src="/products/<%= product._id %>/image" class="thumb-img active">
+                    <img src="/products/<%= product._id %>/image" class="thumb-img">
+                    <img src="/products/<%= product._id %>/image" class="thumb-img">
+                </div>
+            </div>
 
-                    <form
-                        action="/products/<%= product._id %>?_method=DELETE"
-                        method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this product?')"
-                    >
-                        <button class="btn btn-sm btn-outline-danger">
-                            🗑 Delete
+            <!-- RIGHT: PRODUCT INFO -->
+            <div class="col-md-7">
+
+                <div class="d-flex justify-content-between align-items-start">
+                    <h2 class="fw-bold"><%= product.name %></h2>
+
+                    <% if (isOwner) { %>
+                        <div class="d-flex gap-2">
+                            <a 
+                                href="/products/<%= product._id %>/edit"
+                                class="btn btn-sm btn-outline-warning">
+                                ✏️ Edit
+                            </a>
+
+                            <form
+                                action="/products/<%= product._id %>?_method=DELETE"
+                                method="POST"
+                                onsubmit="return confirm('Are you sure you want to delete this product?')"
+                            >
+                                <button class="btn btn-sm btn-outline-danger">
+                                    🗑 Delete
+                                </button>
+                            </form>
+                        </div>
+                    <% } %>
+                </div>
+
+                <h3 class="text-danger fw-bold mb-3">
+                    $<%= product.price %>
+                </h3>
+
+                <p class="text-muted">
+                    <%= product.description %>
+                </p>
+
+                <hr>
+
+                <p class="fw-semibold">
+                    <% if (product.stock > 0) { %>
+                        <span class="text-success">
+                            ✔ In Stock (<%= product.stock %>)
+                        </span>
+                    <% } else { %>
+                        <span class="text-danger">
+                            ✖ Out of Stock
+                        </span>
+                    <% } %>
+                </p>
+
+                <% if (!isOwner) { %>
+                    <form action="/cart" method="POST" class="d-flex align-items-center gap-3">
+                        <input type="hidden" name="productId" value="<%= product._id %>">
+
+                        <input 
+                            type="number"
+                            name="amount"
+                            class="form-control qty-input"
+                            min="1"
+                            value="1"
+                        >
+
+                        <button type="submit" class="btn btn-warning btn-lg">
+                            🛒 Add to Cart
                         </button>
                     </form>
-                </div>
-            <% } %>
+                <% } %>
+
+            </div>
         </div>
 
-        <!-- Rating -->
-        <div class="mb-2">
-            ⭐⭐⭐⭐☆
-            <span class="text-muted">(124 ratings)</span>
-        </div>
-
-        <h3 class="text-danger fw-bold mb-3">
-            $<%= product.price %>
-        </h3>
-
-        <p class="text-muted">
-            <%= product.description %>
-        </p>
-
-        <hr>
-
-        <!-- Stock -->
-        <p class="fw-semibold">
-            <% if (product.stock > 0) { %>
-                <span class="text-success">
-                    ✔ In Stock (<%= product.stock %>)
-                </span>
-            <% } else { %>
-                <span class="text-danger">
-                    ✖ Out of Stock
-                </span>
-            <% } %>
-        </p>
-
-        <!-- ✅ ADD TO CART (ONLY FOR NON-OWNER) -->
-        <% if (!isOwner) { %>
-            <form action="/cart" method="POST" class="d-flex align-items-center gap-3">
-                <input type="hidden" name="productId" value="<%= product._id %>">
-                <input type="hidden" name="name" value="<%= product.name %>">
-                <input type="hidden" name="price" value="<%= product.price %>">
-
-                <input 
-                    type="number"
-                    name="amount"
-                    class="form-control qty-input"
-                    min="1"
-                    value="1"
-                >
-
-                <button type="submit" class="btn btn-warning btn-lg">
-                    🛒 Add to Cart
-                </button>
-            </form>
-        <% } %>
-
-        <!-- Extra Info -->
-        <div class="mt-4 small text-muted">
-            🚚 Free delivery in 2 days <br>
-            🔄 14 days return policy
-        </div>
-
-    </div>
-</div>
-
-<!-- DETAILS SECTION -->
-<div class="mt-5">
-    <h4 class="fw-bold">Product Details</h4>
-    <p>
-        <%= product.description %>
-    </p>
-</div>
-
-<% } %>
+    <% } %>
 </div>
 
 <%- include('parts/footer') %>
