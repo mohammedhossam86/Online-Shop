@@ -28,12 +28,6 @@ const confirm = asyncWrapper(async (req, res) => {
         throw new AppError('No valid carts found', StatusCodes.BAD_REQUEST);
     }
 
-    const deletedCart = await Cart.deleteMany({ _id: { $in: cartsId } , userId: req.userId });
-    
-    if(deletedCart.deletedCount === 0) {
-        throw new AppError('No carts were deleted', StatusCodes.BAD_REQUEST);
-    }
-    
     const order = await Order.create({
         userId: req.userId,
         fullName: req.body.fullName,
@@ -43,6 +37,12 @@ const confirm = asyncWrapper(async (req, res) => {
         cartsId,
         paymentMethod: req.body.payment,
     });
+    
+    const deletedCart = await Cart.deleteMany({ _id: { $in: cartsId } , userId: req.userId });
+    
+    if(deletedCart.deletedCount === 0) {
+        throw new AppError('No carts were deleted', StatusCodes.BAD_REQUEST);
+    }
 
     res.redirect('/orders');
 
